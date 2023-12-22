@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Rampart+One&display=swap');
+
+body {
+    font-family: 'Rampart One', sans-serif;
+    text-align: center;
+    color: white;
+    background-image: url(img/background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    background: rgb(95, 134, 112, 0.6);
+    border: 5px solid #5F8670;
+    border-radius: 25px;
+    padding: 50px;
+    min-width: 772px;
+    max-width: 772px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 100px;
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: #FF9800;
+}
+
+.ocultar {
+    display: none;
+}
+
+input {
+    display: none;
+}
+
+#mascotas h2 {
+    margin-top: 0px;
+}
+
+#mascotas img{
+    border: 3.5px solid #820300;
+    width: 187.5px;
+    height: 150px;
+    padding: 15px;
+    border-radius: 25px;
+    background: rgba(184, 0, 0, 0.6);
+    margin: 30px 15px 30px;
+}
+
+#seleccionar {
+    background: rgba(184, 0, 0, 0.6);
+    border: 3.5px solid #820300;
+    border-radius: 20px;
+    width: 300px;
+    font-size: x-large;
+    font-family: 'Rampart One', sans-serif;
+    color: white;
+    margin-top: 10px;
+}
+
+
+#seleccionar:hover {
+    background-color: #820300;
+}
+
+#mascotas img:hover{
+    width: 206.25px;
+    height: 165px;
+    margin: 0;
+}
+
+#mascotas input:checked + label img{
+    background-color: #820300;
+}
+
+p {
+    font-size: 20px;
+}
+
+.ataques button {
+    width: 150px;
+    height: 50px;
+    background: rgba(184, 0, 0, 0.6);
+    border: 3.5px solid #820300;
+    border-radius: 25px;
+    color: white;
+    font-size: 20px;
+}
+
+.ataques button:hover {
+    background-color: #820300;
+}
+
+.combat-log {
+    min-height: 250px;
+    max-height: 250px;
+    min-width: 500px;
+    max-width: 500px;
+    background: rgba(184, 0, 0, 0.6);
+    border: 3.5px solid #820300;
+    border-radius: 25px;
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+#reiniciar-btn {
+    margin-top: 25px;
+    background: rgba(184, 0, 0, 0.6);
+    border: 3.5px solid #820300;
+    border-radius: 20px;
+    width: 300px;
+    font-size: x-large;
+    font-family: 'Rampart One', sans-serif;
+    color: white;
+}
+
+#reiniciar-btn:hover {
+    background-color: #820300;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <title>Raijūken</title>
+</head>
+<body>
+    <div class="container">
+        <h1>雷獣拳</h1>
+
+        <section id="mascotas">
+            <h2>Elige tu mascota:</h2>
+
+            <div>
+                <input type="radio" name="mascota" id="akairu"><label for="akairu"><img src="img/akairu.png" alt="akairu"></label>
+                <input type="radio" name="mascota" id="sakanaari"><label for="sakanaari"><img src="img/sakanaari.png" alt="sakanaari"></label>
+                <input type="radio" name="mascota" id="kusame"><label for="kusame"><img src="img/kusame.png" alt="kusame"></label><br>
+            </div>
+
+            <div id="descripcion" class="ocultar">
+                <p>
+                    <b><h3 id="nombre-mascota"></h3>
+                    <li>Ataque: <span id="at-stat"></span></li>
+                    <li>Vida: <span id="hp-stat"></span></li>
+                    <li>Tipo: <span id="tipo"></span></li></b>
+                </p>
+            </div>
+
+            <button id="seleccionar">Seleccionar</button>
+        </section>
+
+        <section id="panel" class="ocultar">
+            <h2>Elige tu ataque:</h2>
+            
+            <div class="ataques">
+                <button id="fuego-btn">Fuego 🔥</button>
+                <button id="agua-btn">Agua 💧</button>
+                <button id="planta-btn">Planta 🌱</button>
+            </div>
+            
+            <div class="combat-log">Combat Log:
+                <p id="mensaje-jugador"></p>
+                <p id="mensaje-enemigo"></p>
+            </div>
+            
+            <p>Tu mascota <span id="mascota-jugador"></span> tiene <b><span id="vida-jugador"></span></b> vidas.</p>
+            <p>La mascota enemiga tiene <b><span id="vida-enemigo">18</span></b> vidas.</p>
+
+            <button id="reiniciar-btn">Reiniciar</button>
+        </section>
+    </div>
+</body>
+</html>
