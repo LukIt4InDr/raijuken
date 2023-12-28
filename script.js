@@ -1,5 +1,26 @@
 window.onload = inicio;
 
+const mascotaJugadorH = document.getElementById('mascota-jugador');
+const vidaJugadorH = document.getElementById('vida-jugador');
+const vidaEnemigoH = document.getElementById('vida-enemigo');
+const akairuInput = document.getElementById('akairu');
+const sakanaariInput = document.getElementById('sakanaari');
+const kusameInput = document.getElementById('kusame');
+const seleccionarMascota = document.getElementById('seleccionar');
+const fuegoBtn = document.getElementById('fuego-btn');
+const aguaBtn = document.getElementById('agua-btn');
+const plantaBtn = document.getElementById('planta-btn');
+const reiniciarBtn = document.getElementById('reiniciar-btn');
+const nombreMascotaH = document.getElementById('nombre-mascota');
+const descripcion = document.getElementById('descripcion');
+const atkStat = document.getElementById('at-stat');
+const hpStat = document.getElementById('hp-stat');
+const type = document.getElementById('tipo');
+const ataquesH = document.getElementById('panel');
+const mascotasH = document.getElementById('mascotas');
+const mensajeJH = document.getElementById('mensaje-jugador');
+const mensajeEH = document.getElementById('mensaje-enemigo');
+
 let mascotaEnemigo = 0;
 let mascotaJugador = 0;
 let ataqueJugador = 0;
@@ -11,27 +32,13 @@ let dañoAtaqueEnemigo = 4;
 let vidaJugador = 0;
 let vidaEnemigo = 18;
 
-let mascotaJugadorH = document.getElementById('mascota-jugador');
-let vidaJugadorH = document.getElementById('vida-jugador');
-let vidaEnemigoH = document.getElementById('vida-enemigo');
-
 function inicio(){
-    let akairuInput = document.getElementById('akairu');
     akairuInput.addEventListener('click', mostrarStatsAkairu);
-    let sakanaariInput = document.getElementById('sakanaari');
     sakanaariInput.addEventListener('click', mostrarStatsSakanaari);
-    let kusameInput = document.getElementById('kusame');
     kusameInput.addEventListener('click', mostrarStatsKusame);
 
-    let seleccionarMascota = document.getElementById('seleccionar');
     seleccionarMascota.addEventListener('click', mascotaSeleccionada);
     
-    let fuegoBtn = document.getElementById('fuego-btn');
-    let aguaBtn = document.getElementById('agua-btn');
-    let plantaBtn = document.getElementById('planta-btn');
-
-    let reiniciarBtn = document.getElementById('reiniciar-btn');
-
     fuegoBtn.addEventListener('click', atacarFuego);
     aguaBtn.addEventListener('click', atacarAgua);
     plantaBtn.addEventListener('click', atacarPlanta);
@@ -40,12 +47,6 @@ function inicio(){
 }
 
 function mostrarStatsAkairu(){
-    let nombreMascotaH = document.getElementById('nombre-mascota');
-    let atkStat = document.getElementById('at-stat');
-    let hpStat = document.getElementById('hp-stat');
-    let type = document.getElementById('tipo');
-    
-    let descripcion = document.getElementById('descripcion');
     descripcion.classList.remove('ocultar');
 
     nombreMascotaH.innerHTML = "Akairu";
@@ -55,12 +56,6 @@ function mostrarStatsAkairu(){
 }
 
 function mostrarStatsSakanaari(){
-    let nombreMascotaH = document.getElementById('nombre-mascota');
-    let atkStat = document.getElementById('at-stat');
-    let hpStat = document.getElementById('hp-stat');
-    let type = document.getElementById('tipo');
-
-    let descripcion = document.getElementById('descripcion');
     descripcion.classList.remove('ocultar');
 
     nombreMascotaH.innerHTML = "Sakanaari";
@@ -70,12 +65,6 @@ function mostrarStatsSakanaari(){
 }
 
 function mostrarStatsKusame(){
-    let nombreMascotaH = document.getElementById('nombre-mascota');
-    let atkStat = document.getElementById('at-stat');
-    let hpStat = document.getElementById('hp-stat');
-    let type = document.getElementById('tipo');
-
-    let descripcion = document.getElementById('descripcion');
     descripcion.classList.remove('ocultar');
 
     nombreMascotaH.innerHTML = "Kusame";
@@ -85,13 +74,6 @@ function mostrarStatsKusame(){
 }
 
 function mascotaSeleccionada(){
-    let akairuInput = document.getElementById('akairu');
-    let sakanaariInput = document.getElementById('sakanaari');
-    let kusameInput = document.getElementById('kusame');
-    
-    let ataquesH = document.getElementById('panel');
-    let mascotasH = document.getElementById('mascotas');
-
     if(akairuInput.checked){
         alert("Seleccionaste al Zorro de Fuego, \"Akairu\".");
         mascotaJugadorH.innerHTML = "Akairu";
@@ -155,13 +137,6 @@ function atacarPlanta(){
 
 function combate(){
     let dañoRecibido = ataqueEnemigo - mascotaJugador;
-
-    let fuegoBtn = document.getElementById('fuego-btn');
-    let aguaBtn = document.getElementById('agua-btn');
-    let plantaBtn = document.getElementById('planta-btn');
-
-    let mensajeJH = document.getElementById('mensaje-jugador');
-    let mensajeEH = document.getElementById('mensaje-enemigo');
 
     dañoAtaqueJugador = calcularDaño();
 
