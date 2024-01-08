@@ -1,5 +1,6 @@
 window.onload = inicio;
 
+const tarjetaMascotaH = document.getElementById('tarjetaMascota');
 const mascotaJugadorH = document.getElementById('mascota-jugador');
 const vidaJugadorH = document.getElementById('vida-jugador');
 const vidaEnemigoH = document.getElementById('vida-enemigo');
@@ -21,6 +22,8 @@ const mascotasH = document.getElementById('mascotas');
 const mensajeJH = document.getElementById('mensaje-jugador');
 const mensajeEH = document.getElementById('mensaje-enemigo');
 
+let mascotas = [];
+let opcionDeMascotas;
 let mascotaEnemigo = 0;
 let mascotaJugador = 0;
 let ataqueJugador = 0;
@@ -32,7 +35,49 @@ let dañoAtaqueEnemigo = 4;
 let vidaJugador = 0;
 let vidaEnemigo = 18;
 
+class Mascota{
+    constructor(nombre, imagen, vida, dañoAtaque){
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.vida = vida;
+        this.dañoAtaque = dañoAtaque;
+        this.ataques = [];
+    }
+}
+
+let akairu = new Mascota('Akairu', 'img/akairu.png', 9, 6);
+let sakanaari = new Mascota('Sakanaari', 'img/sakanaari.png', 14, 4);
+let kusame = new Mascota('Kusame', 'img/kusame.png', 20, 2);
+
+akairu.ataques.push(
+    { nombre: '🔥', id: 'fuego-btn' },
+    { nombre: '💧', id: 'agua-btn' },
+    { nombre: '🌱', id: 'planta-btn' }
+);
+
+sakanaari.ataques.push(
+    { nombre: '🔥', id: 'fuego-btn' },
+    { nombre: '💧', id: 'agua-btn' },
+    { nombre: '🌱', id: 'planta-btn' }
+);
+
+kusame.ataques.push(
+    { nombre: '🔥', id: 'fuego-btn' },
+    { nombre: '💧', id: 'agua-btn' },
+    { nombre: '🌱', id: 'planta-btn' }
+);
+
+mascotas.push(akairu, sakanaari, kusame);
+
 function inicio(){
+    mascotas.forEach((mascota) => {
+        opcionDeMascotas = `
+        <input type="radio" name="mascota" id=${mascota.nombre}><label for=${mascota.nombre}><img src=${mascota.imagen} alt=${mascota.nombre}></label>
+        `;
+
+        // tarjetaMascotaH.innerHTML += opcionDeMascotas;
+    });
+
     akairuInput.addEventListener('click', mostrarStatsAkairu);
     sakanaariInput.addEventListener('click', mostrarStatsSakanaari);
     kusameInput.addEventListener('click', mostrarStatsKusame);
