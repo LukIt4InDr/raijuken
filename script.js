@@ -4,9 +4,6 @@ const tarjetaMascotaH = document.getElementById('tarjetaMascota');
 const mascotaJugadorH = document.getElementById('mascota-jugador');
 const vidaJugadorH = document.getElementById('vida-jugador');
 const vidaEnemigoH = document.getElementById('vida-enemigo');
-const akairuInput = document.getElementById('akairu');
-const sakanaariInput = document.getElementById('sakanaari');
-const kusameInput = document.getElementById('kusame');
 const seleccionarMascota = document.getElementById('seleccionar');
 const fuegoBtn = document.getElementById('fuego-btn');
 const aguaBtn = document.getElementById('agua-btn');
@@ -24,6 +21,11 @@ const mensajeEH = document.getElementById('mensaje-enemigo');
 
 let mascotas = [];
 let opcionDeMascotas;
+
+let akairuInput;
+let sakanaariInput;
+let kusameInput;
+
 let mascotaEnemigo = 0;
 let mascotaJugador = 0;
 let ataqueJugador = 0;
@@ -45,9 +47,9 @@ class Mascota{
     }
 }
 
-let akairu = new Mascota('Akairu', 'img/akairu.png', 9, 6);
-let sakanaari = new Mascota('Sakanaari', 'img/sakanaari.png', 14, 4);
-let kusame = new Mascota('Kusame', 'img/kusame.png', 20, 2);
+let akairu = new Mascota('akairu', 'img/akairu.png', 9, 6);
+let sakanaari = new Mascota('sakanaari', 'img/sakanaari.png', 14, 4);
+let kusame = new Mascota('kusame', 'img/kusame.png', 20, 2);
 
 akairu.ataques.push(
     { nombre: '🔥', id: 'fuego-btn' },
@@ -75,7 +77,11 @@ function inicio(){
         <input type="radio" name="mascota" id=${mascota.nombre}><label for=${mascota.nombre}><img src=${mascota.imagen} alt=${mascota.nombre}></label>
         `;
 
-        // tarjetaMascotaH.innerHTML += opcionDeMascotas;
+        tarjetaMascotaH.innerHTML += opcionDeMascotas;
+
+        akairuInput = document.getElementById('akairu');
+        sakanaariInput = document.getElementById('sakanaari');
+        kusameInput = document.getElementById('kusame');
     });
 
     akairuInput.addEventListener('click', mostrarStatsAkairu);
