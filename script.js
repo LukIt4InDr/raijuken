@@ -38,35 +38,42 @@ let vidaJugador = 0;
 let vidaEnemigo = 18;
 
 class Mascota{
-    constructor(nombre, imagen, vida, dañoAtaque){
+    constructor(nombre, imagen, vida, dañoAtaque, numero){
         this.nombre = nombre;
         this.imagen = imagen;
         this.vida = vida;
         this.dañoAtaque = dañoAtaque;
+        this.numero = numero;
         this.ataques = [];
     }
 }
 
-let akairu = new Mascota('akairu', 'img/akairu.png', 9, 6);
-let sakanaari = new Mascota('sakanaari', 'img/sakanaari.png', 14, 4);
-let kusame = new Mascota('kusame', 'img/kusame.png', 20, 2);
+let akairu = new Mascota('akairu', 'img/akairu.png', 9, 6, 1);
+let sakanaari = new Mascota('sakanaari', 'img/sakanaari.png', 14, 4, 2);
+let kusame = new Mascota('kusame', 'img/kusame.png', 20, 2, 3);
 
 akairu.ataques.push(
+    { nombre: '👊', id: 'normal-btn' },
     { nombre: '🔥', id: 'fuego-btn' },
-    { nombre: '💧', id: 'agua-btn' },
-    { nombre: '🌱', id: 'planta-btn' }
+    { nombre: '🔥', id: 'fuego-btn' },
+    { nombre: '🔥', id: 'fuego-btn' },
+    { nombre: '⭐', id: 'especial-btn' }
 );
 
 sakanaari.ataques.push(
-    { nombre: '🔥', id: 'fuego-btn' },
+    { nombre: '👊', id: 'normal-btn' },
     { nombre: '💧', id: 'agua-btn' },
-    { nombre: '🌱', id: 'planta-btn' }
+    { nombre: '💧', id: 'agua-btn' },
+    { nombre: '💧', id: 'agua-btn' },
+    { nombre: '⭐', id: 'especial-btn' }
 );
 
 kusame.ataques.push(
-    { nombre: '🔥', id: 'fuego-btn' },
-    { nombre: '💧', id: 'agua-btn' },
-    { nombre: '🌱', id: 'planta-btn' }
+    { nombre: '👊', id: 'normal-btn' },
+    { nombre: '🌱', id: 'planta-btn' },
+    { nombre: '🌱', id: 'planta-btn' },
+    { nombre: '🌱', id: 'planta-btn' },
+    { nombre: '⭐', id: 'especial-btn' }
 );
 
 mascotas.push(akairu, sakanaari, kusame);
@@ -131,6 +138,7 @@ function mascotaSeleccionada(){
         mascotaJugador = 1;
         vidaJugador = 9;
         vidaJugadorH.innerHTML = vidaJugador;
+        extraerAtaque()
         ataquesH.classList.remove('ocultar');
         mascotasH.classList.add('ocultar');
     }else if(sakanaariInput.checked){
@@ -139,6 +147,7 @@ function mascotaSeleccionada(){
         mascotaJugador = 2;
         vidaJugador = 14;
         vidaJugadorH.innerHTML = vidaJugador;
+        extraerAtaque()
         ataquesH.classList.remove('ocultar');
         mascotasH.classList.add('ocultar');
     }else if(kusameInput.checked){
@@ -147,6 +156,7 @@ function mascotaSeleccionada(){
         mascotaJugador = 3;
         vidaJugador = 20;
         vidaJugadorH.innerHTML = vidaJugador;
+        extraerAtaque()
         ataquesH.classList.remove('ocultar');
         mascotasH.classList.add('ocultar');
     }else{
@@ -184,6 +194,17 @@ function atacarPlanta(){
     tipoAtaqueJugador = 'PLANTA';
 
     combate();
+}
+
+function extraerAtaque(){
+    let ataques
+
+    for(let i = 0; i < mascotas.length; i++){
+        if(mascotaJugador === mascotas[i].numero){
+            ataques = mascotas[i].ataques;
+        }
+    }
+    console.log(ataques);
 }
 
 function combate(){
