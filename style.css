@@ -34,6 +34,12 @@ h1 {
     display: none;
 }
 
+.mostrar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 input {
     display: none;
 }
@@ -90,6 +96,15 @@ p {
     border-radius: 25px;
     color: white;
     font-size: 20px;
+    margin-bottom: 15px;
+}
+
+#especial-btn {
+    border: 3.5px solid white;
+}
+
+#normal-btn {
+    border: 3.5px solid black;
 }
 
 .ataques button:hover {

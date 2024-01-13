@@ -1,13 +1,11 @@
 window.onload = inicio;
 
-const tarjetaMascotaH = document.getElementById('tarjetaMascota');
+const tarjetaMascotaH = document.getElementById('tarjeta-mascota');
+const botonAtaqueH = document.getElementById('boton-ataque');
 const mascotaJugadorH = document.getElementById('mascota-jugador');
 const vidaJugadorH = document.getElementById('vida-jugador');
 const vidaEnemigoH = document.getElementById('vida-enemigo');
 const seleccionarMascota = document.getElementById('seleccionar');
-const fuegoBtn = document.getElementById('fuego-btn');
-const aguaBtn = document.getElementById('agua-btn');
-const plantaBtn = document.getElementById('planta-btn');
 const reiniciarBtn = document.getElementById('reiniciar-btn');
 const nombreMascotaH = document.getElementById('nombre-mascota');
 const descripcion = document.getElementById('descripcion');
@@ -21,10 +19,17 @@ const mensajeEH = document.getElementById('mensaje-enemigo');
 
 let mascotas = [];
 let opcionDeMascotas;
+let opcionDeAtaques;
 
 let akairuInput;
 let sakanaariInput;
 let kusameInput;
+
+let fuegoBtn;
+let aguaBtn;
+let plantaBtn;
+let especialBtn;
+let normalBtn;
 
 let mascotaEnemigo = 0;
 let mascotaJugador = 0;
@@ -53,27 +58,27 @@ let sakanaari = new Mascota('sakanaari', 'img/sakanaari.png', 14, 4, 2);
 let kusame = new Mascota('kusame', 'img/kusame.png', 20, 2, 3);
 
 akairu.ataques.push(
-    { nombre: '👊', id: 'normal-btn' },
-    { nombre: '🔥', id: 'fuego-btn' },
-    { nombre: '🔥', id: 'fuego-btn' },
-    { nombre: '🔥', id: 'fuego-btn' },
-    { nombre: '⭐', id: 'especial-btn' }
+    { nombre: 'Normal 👊', id: 'normal-btn' },
+    { nombre: 'Especial ⭐', id: 'especial-btn' },
+    { nombre: 'Fuego 🔥', id: 'fuego-btn-uno' },
+    { nombre: 'Fuego 🔥', id: 'fuego-btn-dos' },
+    { nombre: 'Fuego 🔥', id: 'fuego-btn-tres' }
 );
 
 sakanaari.ataques.push(
-    { nombre: '👊', id: 'normal-btn' },
-    { nombre: '💧', id: 'agua-btn' },
-    { nombre: '💧', id: 'agua-btn' },
-    { nombre: '💧', id: 'agua-btn' },
-    { nombre: '⭐', id: 'especial-btn' }
+    { nombre: 'Normal 👊', id: 'normal-btn' },
+    { nombre: 'Especial ⭐', id: 'especial-btn' },
+    { nombre: 'Agua 💧', id: 'agua-btn-uno' },
+    { nombre: 'Agua 💧', id: 'agua-btn-dos' },
+    { nombre: 'Agua 💧', id: 'agua-btn-tres' }
 );
 
 kusame.ataques.push(
-    { nombre: '👊', id: 'normal-btn' },
-    { nombre: '🌱', id: 'planta-btn' },
-    { nombre: '🌱', id: 'planta-btn' },
-    { nombre: '🌱', id: 'planta-btn' },
-    { nombre: '⭐', id: 'especial-btn' }
+    { nombre: 'Normal 👊', id: 'normal-btn' },
+    { nombre: 'Especial ⭐', id: 'especial-btn' },
+    { nombre: 'Planta 🌱', id: 'planta-btn-uno' },
+    { nombre: 'Planta 🌱', id: 'planta-btn-dos' },
+    { nombre: 'Planta 🌱', id: 'planta-btn-tres' }
 );
 
 mascotas.push(akairu, sakanaari, kusame);
@@ -96,10 +101,6 @@ function inicio(){
     kusameInput.addEventListener('click', mostrarStatsKusame);
 
     seleccionarMascota.addEventListener('click', mascotaSeleccionada);
-    
-    fuegoBtn.addEventListener('click', atacarFuego);
-    aguaBtn.addEventListener('click', atacarAgua);
-    plantaBtn.addEventListener('click', atacarPlanta);
 
     reiniciarBtn.addEventListener('click', reinicarPartida);
 }
@@ -140,6 +141,7 @@ function mascotaSeleccionada(){
         vidaJugadorH.innerHTML = vidaJugador;
         extraerAtaque()
         ataquesH.classList.remove('ocultar');
+        ataquesH.classList.add('mostrar');
         mascotasH.classList.add('ocultar');
     }else if(sakanaariInput.checked){
         alert("Seleccionaste al Armadillo de Agua, \"Sakanaari\".");
@@ -149,6 +151,7 @@ function mascotaSeleccionada(){
         vidaJugadorH.innerHTML = vidaJugador;
         extraerAtaque()
         ataquesH.classList.remove('ocultar');
+        ataquesH.classList.add('mostrar');
         mascotasH.classList.add('ocultar');
     }else if(kusameInput.checked){
         alert("Seleccionaste a la Tortuga de Planta, \"Kusame\".");
@@ -158,6 +161,7 @@ function mascotaSeleccionada(){
         vidaJugadorH.innerHTML = vidaJugador;
         extraerAtaque()
         ataquesH.classList.remove('ocultar');
+        ataquesH.classList.add('mostrar');
         mascotasH.classList.add('ocultar');
     }else{
         alert("No selecciono nada!");
@@ -204,7 +208,44 @@ function extraerAtaque(){
             ataques = mascotas[i].ataques;
         }
     }
-    console.log(ataques);
+
+    ataques.forEach((ataque) => {
+        opcionDeAtaques = `
+        <button id=${ataque.id}>${ataque.nombre}</button>
+        `;
+
+        if(ataque.id === 'especial-btn'){
+            opcionDeAtaques = `
+            <button id=${ataque.id}>${ataque.nombre}</button><br>
+            `;
+        }
+
+        botonAtaqueH.innerHTML += opcionDeAtaques;
+
+        switch(mascotaJugador){
+            case 1:
+                fuegoBtn = document.getElementById('fuego-btn-uno');
+                break;
+            case 2:
+                aguaBtn = document.getElementById('agua-btn-uno');
+                break;
+            case 3:
+                plantaBtn = document.getElementById('planta-btn-uno');
+                break;
+        }
+    })
+
+    switch(mascotaJugador){
+        case 1:
+            fuegoBtn.addEventListener('click', atacarFuego);
+            break;
+        case 2:
+            aguaBtn.addEventListener('click', atacarAgua);
+            break;
+        case 3:
+            plantaBtn.addEventListener('click', atacarPlanta);
+            break;
+    }
 }
 
 function combate(){
@@ -217,12 +258,22 @@ function combate(){
     mensajeJH.innerHTML = "Tu ataque es de " + tipoAtaqueJugador + " con un daño de " + dañoAtaqueJugador + ". El enemigo ahora tiene " + vidaEnemigo + " de vida.";
 
     if(vidaEnemigo <= 0){
+        vidaEnemigo = 0;
+
         vidaJugadorH.innerHTML = vidaJugador;
         vidaEnemigoH.innerHTML = vidaEnemigo;
 
-        fuegoBtn.disabled = true;
-        aguaBtn.disabled = true;
-        plantaBtn.disabled = true;
+        switch(mascotaJugador){
+            case 1:
+                fuegoBtn.disabled = true;
+                break;
+            case 2:
+                aguaBtn.disabled = true;
+                break;
+            case 3:
+                plantaBtn.disabled = true;
+                break;
+        }
 
         mensajeJH.innerHTML = "Ganaste!";
         mensajeEH.innerHTML = "";
@@ -244,12 +295,22 @@ function combate(){
         mensajeEH.innerHTML = "El ataque del enemigo es de " + tipoAtaqueEnemigo + " con un daño de " + dañoAtaqueEnemigo + ". Tu mascota " + mascotaJugadorH.innerHTML + " ahora tiene " + vidaJugador + " de vida."
 
         if(vidaJugador <= 0){
+            vidaJugador = 0;
+
             vidaJugadorH.innerHTML = vidaJugador;
             vidaEnemigoH.innerHTML = vidaEnemigo;
 
-            fuegoBtn.disabled = true;
-            aguaBtn.disabled = true;
-            plantaBtn.disabled = true;
+            switch(mascotaJugador){
+                case 1:
+                    fuegoBtn.disabled = true;
+                    break;
+                case 2:
+                    aguaBtn.disabled = true;
+                    break;
+                case 3:
+                    plantaBtn.disabled = true;
+                    break;
+            }
 
             mensajeJH.innerHTML = "";
             mensajeEH.innerHTML = "Perdiste!";
