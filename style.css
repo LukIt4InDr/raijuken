@@ -137,3 +137,47 @@ p {
 #reiniciar-btn:hover {
     background-color: #820300;
 }
+
+.rainbow{
+    animation: rainbow 2.5s linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rainbow{
+    100%,0%{
+        border: 3.5px solid rgb(255,0,0);
+    }
+    8%{
+        border: 3.5px solid rgb(255,127,0);
+    }
+    16%{
+        border: 3.5px solid rgb(255,255,0);
+    }
+    25%{
+        border: 3.5px solid rgb(127,255,0);
+    }
+    33%{
+        border: 3.5px solid rgb(0,255,0);
+    }
+    41%{
+        border: 3.5px solid rgb(0,255,127);
+    }
+    50%{
+        border: 3.5px solid rgb(0,255,255);
+    }
+    58%{
+        border: 3.5px solid rgb(0,127,255);
+    }
+    66%{
+        border: 3.5px solid rgb(0,0,255);
+    }
+    75%{
+        border: 3.5px solid rgb(127,0,255);
+    }
+    83%{
+        border: 3.5px solid rgb(255,0,255);
+    }
+    91%{
+        border: 3.5px solid rgb(255,0,127);
+    }
+}

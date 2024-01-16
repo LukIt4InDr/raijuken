@@ -41,6 +41,9 @@ let tipoAtaqueEnemigo = '';
 let dañoAtaqueEnemigo = 4;
 let vidaJugador = 0;
 let vidaEnemigo = 18;
+let vidaMaxima = 0;
+let especialKusame = false;
+let lanzoEspecial = false;
 
 class Mascota{
     constructor(nombre, imagen, vida, dañoAtaque, numero){
@@ -138,6 +141,7 @@ function mascotaSeleccionada(){
         mascotaJugadorH.innerHTML = "Akairu";
         mascotaJugador = 1;
         vidaJugador = 9;
+        vidaMaxima = 9;
         vidaJugadorH.innerHTML = vidaJugador;
         extraerAtaque()
         ataquesH.classList.remove('ocultar');
@@ -148,6 +152,7 @@ function mascotaSeleccionada(){
         mascotaJugadorH.innerHTML = "Sakanaari";
         mascotaJugador = 2;
         vidaJugador = 14;
+        vidaMaxima = 14;
         vidaJugadorH.innerHTML = vidaJugador;
         extraerAtaque()
         ataquesH.classList.remove('ocultar');
@@ -158,6 +163,7 @@ function mascotaSeleccionada(){
         mascotaJugadorH.innerHTML = "Kusame";
         mascotaJugador = 3;
         vidaJugador = 20;
+        vidaMaxima = 20;
         vidaJugadorH.innerHTML = vidaJugador;
         extraerAtaque()
         ataquesH.classList.remove('ocultar');
@@ -187,7 +193,7 @@ function atacarAgua(){
     mascotaEnemigo = random(1, 3);
     tipoDeAtaqueEnemigo()
     tipoAtaqueJugador = 'AGUA';
-
+    
     combate();
 }
 
@@ -196,6 +202,34 @@ function atacarPlanta(){
     mascotaEnemigo = random(1, 3);
     tipoDeAtaqueEnemigo()
     tipoAtaqueJugador = 'PLANTA';
+    
+    combate();
+}
+
+function ataqueEspecial(){
+    ataqueJugador = 4;
+    mascotaEnemigo = random(1, 3);
+    tipoDeAtaqueEnemigo()
+    tipoAtaqueJugador = 'ESPECIAL';
+
+    switch(mascotaJugador){
+        case 1:
+            dañoAtaqueJugador = 6;
+            vidaJugador += 2;
+            break;
+        case 2:
+            dañoAtaqueJugador = 2;
+            vidaJugador += 5;
+            break;
+        case 3:
+            especialKusame = true;
+            dañoAtaqueJugador = 0;
+            break;
+    }
+
+    lanzoEspecial = true;
+    especialBtn.disabled = true;
+    especialBtn.classList.remove('rainbow');
 
     combate();
 }
@@ -216,7 +250,7 @@ function extraerAtaque(){
 
         if(ataque.id === 'especial-btn'){
             opcionDeAtaques = `
-            <button id=${ataque.id}>${ataque.nombre}</button><br>
+            <button id=${ataque.id} disabled>${ataque.nombre}</button><br>
             `;
         }
 
@@ -225,12 +259,15 @@ function extraerAtaque(){
         switch(mascotaJugador){
             case 1:
                 fuegoBtn = document.getElementById('fuego-btn-uno');
+                especialBtn = document.getElementById('especial-btn');
                 break;
             case 2:
                 aguaBtn = document.getElementById('agua-btn-uno');
+                especialBtn = document.getElementById('especial-btn');
                 break;
             case 3:
                 plantaBtn = document.getElementById('planta-btn-uno');
+                especialBtn = document.getElementById('especial-btn');
                 break;
         }
     })
@@ -238,12 +275,15 @@ function extraerAtaque(){
     switch(mascotaJugador){
         case 1:
             fuegoBtn.addEventListener('click', atacarFuego);
+            especialBtn.addEventListener('click', ataqueEspecial);
             break;
         case 2:
             aguaBtn.addEventListener('click', atacarAgua);
+            especialBtn.addEventListener('click', ataqueEspecial);
             break;
         case 3:
             plantaBtn.addEventListener('click', atacarPlanta);
+            especialBtn.addEventListener('click', ataqueEspecial);
             break;
     }
 }
@@ -251,11 +291,17 @@ function extraerAtaque(){
 function combate(){
     let dañoRecibido = ataqueEnemigo - mascotaJugador;
 
-    dañoAtaqueJugador = calcularDaño();
+    if(ataqueJugador != 4){
+        calcularDaño();
+    }
 
     vidaEnemigo -= dañoAtaqueJugador;
 
-    mensajeJH.innerHTML = "Tu ataque es de " + tipoAtaqueJugador + " con un daño de " + dañoAtaqueJugador + ". El enemigo ahora tiene " + vidaEnemigo + " de vida.";
+    if(ataqueJugador === 4){
+        mensajeEspecial();
+    }else{
+        mensajeJH.innerHTML = "Tu ataque es de " + tipoAtaqueJugador + " con un daño de " + dañoAtaqueJugador + ". El enemigo ahora tiene " + vidaEnemigo + " de vida.";
+    }
 
     if(vidaEnemigo <= 0){
         vidaEnemigo = 0;
@@ -290,9 +336,15 @@ function combate(){
             dañoAtaqueEnemigo = 0;
         }
 
-        vidaJugador -= dañoAtaqueEnemigo;
+        if(ataqueJugador === 4 && mascotaJugador === 3){
+            vidaEnemigo -= dañoAtaqueEnemigo;
+    
+            mensajeEH.innerHTML = "El ataque del enemigo es de " + tipoAtaqueEnemigo + " con un daño de " + dañoAtaqueEnemigo + ". Tu mascota Kusame se Protegio con su Caparazon y le devolvio el ataque al enemigo... Ahora el enemigo tiene " + vidaEnemigo + " de vida.";
+        }else{
+            vidaJugador -= dañoAtaqueEnemigo;
 
-        mensajeEH.innerHTML = "El ataque del enemigo es de " + tipoAtaqueEnemigo + " con un daño de " + dañoAtaqueEnemigo + ". Tu mascota " + mascotaJugadorH.innerHTML + " ahora tiene " + vidaJugador + " de vida."
+            mensajeEH.innerHTML = "El ataque del enemigo es de " + tipoAtaqueEnemigo + " con un daño de " + dañoAtaqueEnemigo + ". Tu mascota " + mascotaJugadorH.innerHTML + " ahora tiene " + vidaJugador + " de vida.";
+        }
 
         if(vidaJugador <= 0){
             vidaJugador = 0;
@@ -321,6 +373,11 @@ function combate(){
         vidaJugadorH.innerHTML = vidaJugador;
         vidaEnemigoH.innerHTML = vidaEnemigo;
         dañoAtaqueEnemigo = 4;
+
+        if(vidaJugador <= vidaMaxima / 2 && !lanzoEspecial){
+            especialBtn.disabled = false;
+            especialBtn.classList.add('rainbow');
+        }
     }, 1500);
 }
 
@@ -348,7 +405,7 @@ function calcularDaño(){
         daño = 0;
     }
 
-    return daño;
+    dañoAtaqueJugador = daño;
 }
 
 function reinicarPartida(){
@@ -372,5 +429,19 @@ function tipoDeAtaqueEnemigo(){
             break;
         default:
             tipoAtaqueEnemigo = '';
+    }
+}
+
+function mensajeEspecial(){
+    switch(mascotaJugador){
+        case 1:
+            mensajeJH.innerHTML = "Tu ataque es " + tipoAtaqueJugador + ", tu mascota Akairu se Cura 2 de Vida e inflinge 6 de daño!";
+            break;
+        case 2:
+            mensajeJH.innerHTML = "Tu ataque es " + tipoAtaqueJugador + ", tu mascota Sakanaari se Cura 5 de Vida e inflinge 2 de daño!";
+            break;
+        case 3:
+            mensajeJH.innerHTML = "Tu ataque es " + tipoAtaqueJugador + ", tu mascota Kusame se Protege con su   Caparazón!";
+            break;
     }
 }
