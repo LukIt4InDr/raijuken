@@ -63,25 +63,19 @@ let kusame = new Mascota('kusame', 'img/kusame.png', 20, 2, 3);
 akairu.ataques.push(
     { nombre: 'Normal 👊', id: 'normal-btn' },
     { nombre: 'Especial ⭐', id: 'especial-btn' },
-    { nombre: 'Fuego 🔥', id: 'fuego-btn-uno' },
-    { nombre: 'Fuego 🔥', id: 'fuego-btn-dos' },
-    { nombre: 'Fuego 🔥', id: 'fuego-btn-tres' }
+    { nombre: 'Fuego 🔥', id: 'fuego-btn' }
 );
 
 sakanaari.ataques.push(
     { nombre: 'Normal 👊', id: 'normal-btn' },
     { nombre: 'Especial ⭐', id: 'especial-btn' },
-    { nombre: 'Agua 💧', id: 'agua-btn-uno' },
-    { nombre: 'Agua 💧', id: 'agua-btn-dos' },
-    { nombre: 'Agua 💧', id: 'agua-btn-tres' }
+    { nombre: 'Agua 💧', id: 'agua-btn' }
 );
 
 kusame.ataques.push(
     { nombre: 'Normal 👊', id: 'normal-btn' },
     { nombre: 'Especial ⭐', id: 'especial-btn' },
-    { nombre: 'Planta 🌱', id: 'planta-btn-uno' },
-    { nombre: 'Planta 🌱', id: 'planta-btn-dos' },
-    { nombre: 'Planta 🌱', id: 'planta-btn-tres' }
+    { nombre: 'Planta 🌱', id: 'planta-btn' }
 );
 
 mascotas.push(akairu, sakanaari, kusame);
@@ -234,6 +228,29 @@ function ataqueEspecial(){
     combate();
 }
 
+function ataqueNormal(){
+    ataqueJugador = 5;
+    mascotaEnemigo = random(1, 3);
+    tipoDeAtaqueEnemigo()
+    tipoAtaqueJugador = 'NORMAL';
+
+    switch(mascotaJugador){
+        case 1:
+            dañoAtaqueJugador = 3;
+            break;
+        case 2:
+            dañoAtaqueJugador = 2;
+            break;
+        case 3:
+            dañoAtaqueJugador = 1;
+            break;
+    }
+
+    normalBtn.disabled = true;
+    
+    combate();
+}
+
 function extraerAtaque(){
     let ataques
 
@@ -258,16 +275,19 @@ function extraerAtaque(){
 
         switch(mascotaJugador){
             case 1:
-                fuegoBtn = document.getElementById('fuego-btn-uno');
+                fuegoBtn = document.getElementById('fuego-btn');
                 especialBtn = document.getElementById('especial-btn');
+                normalBtn = document.getElementById('normal-btn');
                 break;
             case 2:
-                aguaBtn = document.getElementById('agua-btn-uno');
+                aguaBtn = document.getElementById('agua-btn');
                 especialBtn = document.getElementById('especial-btn');
+                normalBtn = document.getElementById('normal-btn');
                 break;
             case 3:
-                plantaBtn = document.getElementById('planta-btn-uno');
+                plantaBtn = document.getElementById('planta-btn');
                 especialBtn = document.getElementById('especial-btn');
+                normalBtn = document.getElementById('normal-btn');
                 break;
         }
     })
@@ -276,14 +296,17 @@ function extraerAtaque(){
         case 1:
             fuegoBtn.addEventListener('click', atacarFuego);
             especialBtn.addEventListener('click', ataqueEspecial);
+            normalBtn.addEventListener('click', ataqueNormal);
             break;
         case 2:
             aguaBtn.addEventListener('click', atacarAgua);
             especialBtn.addEventListener('click', ataqueEspecial);
+            normalBtn.addEventListener('click', ataqueNormal);
             break;
         case 3:
             plantaBtn.addEventListener('click', atacarPlanta);
             especialBtn.addEventListener('click', ataqueEspecial);
+            normalBtn.addEventListener('click', ataqueNormal);
             break;
     }
 }
@@ -291,10 +314,10 @@ function extraerAtaque(){
 function combate(){
     let dañoRecibido = ataqueEnemigo - mascotaJugador;
 
-    if(ataqueJugador != 4){
+    if(ataqueJugador != 4 && ataqueJugador != 5){
         calcularDaño();
     }
-
+    
     vidaEnemigo -= dañoAtaqueJugador;
 
     if(ataqueJugador === 4){
