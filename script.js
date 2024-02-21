@@ -16,6 +16,9 @@ const ataquesH = document.getElementById('panel');
 const mascotasH = document.getElementById('mascotas');
 const mensajeJH = document.getElementById('mensaje-jugador');
 const mensajeEH = document.getElementById('mensaje-enemigo');
+const modal = document.getElementById('mi-modal');
+const comoJugarBtn = document.getElementById('como-jugar');
+const span = document.getElementsByClassName('close')[0];
 
 let mascotas = [];
 let opcionDeMascotas;
@@ -99,7 +102,28 @@ function inicio(){
 
     seleccionarMascota.addEventListener('click', mascotaSeleccionada);
 
+    comoJugarBtn.addEventListener('click', mostrarModal);
+    span.addEventListener('click', cerrarModal);
+    window.addEventListener('click', cerrarModalWindow);
+
     reiniciarBtn.addEventListener('click', reinicarPartida);
+}
+
+function mostrarModal(){
+    modal.classList.remove('ocultar');
+    modal.classList.add('block-m');
+}
+
+function cerrarModal(){
+    modal.classList.add('ocultar');
+    modal.classList.remove('block-m');
+}
+
+function cerrarModalWindow(event){
+    if(event.target == modal){
+        modal.classList.add('ocultar');
+        modal.classList.remove('block-m');
+    }
 }
 
 function mostrarStatsAkairu(){
