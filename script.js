@@ -86,7 +86,7 @@ mascotas.push(akairu, sakanaari, kusame);
 function inicio(){
     mascotas.forEach((mascota) => {
         opcionDeMascotas = `
-        <input type="radio" name="mascota" id=${mascota.nombre}><label for=${mascota.nombre}><img src=${mascota.imagen} alt=${mascota.nombre}></label>
+        <input type="radio" name="mascota" id=${mascota.nombre}><label for=${mascota.nombre}><img id=${mascota.nombre}-img src=${mascota.imagen} alt=${mascota.nombre}></label>
         `;
 
         tarjetaMascotaH.innerHTML += opcionDeMascotas;
@@ -95,6 +95,14 @@ function inicio(){
         sakanaariInput = document.getElementById('sakanaari');
         kusameInput = document.getElementById('kusame');
     });
+
+    let akairuImg = document.getElementById('akairu-img');
+    let sakanaariImg = document.getElementById('sakanaari-img');
+    let kusameImg = document.getElementById('kusame-img');
+
+    akairuImg.addEventListener('mouseover', reproducirAudioHover, false);
+    sakanaariImg.addEventListener('mouseover', reproducirAudioHover);
+    kusameImg.addEventListener('mouseover', reproducirAudioHover);
 
     akairuInput.addEventListener('click', mostrarStatsAkairu);
     sakanaariInput.addEventListener('click', mostrarStatsSakanaari);
@@ -151,6 +159,11 @@ function mostrarStatsKusame(){
     atkStat.innerHTML = "⭐";
     hpStat.innerHTML = "⭐⭐⭐";
     type.innerHTML = "PLANTA";
+}
+
+function reproducirAudioHover(){
+    let audio = document.getElementById('select-hover');
+    audio.play();
 }
 
 function mascotaSeleccionada(){
