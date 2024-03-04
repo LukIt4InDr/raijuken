@@ -86,7 +86,7 @@ mascotas.push(akairu, sakanaari, kusame);
 function inicio(){
     mascotas.forEach((mascota) => {
         opcionDeMascotas = `
-        <input type="radio" name="mascota" id=${mascota.nombre}><label for=${mascota.nombre}><img src=${mascota.imagen} alt=${mascota.nombre}></label>
+        <input type="radio" name="mascota" id=${mascota.nombre}><label for=${mascota.nombre}><img id=${mascota.nombre}-img src=${mascota.imagen} alt=${mascota.nombre}></label>
         `;
 
         tarjetaMascotaH.innerHTML += opcionDeMascotas;
@@ -96,20 +96,33 @@ function inicio(){
         kusameInput = document.getElementById('kusame');
     });
 
+    let akairuImg = document.getElementById('akairu-img');
+    let sakanaariImg = document.getElementById('sakanaari-img');
+    let kusameImg = document.getElementById('kusame-img');
+
+    akairuImg.addEventListener('mouseover', reproducirAudioHover);
+    sakanaariImg.addEventListener('mouseover', reproducirAudioHover);
+    kusameImg.addEventListener('mouseover', reproducirAudioHover);
+
     akairuInput.addEventListener('click', mostrarStatsAkairu);
     sakanaariInput.addEventListener('click', mostrarStatsSakanaari);
     kusameInput.addEventListener('click', mostrarStatsKusame);
 
     seleccionarMascota.addEventListener('click', mascotaSeleccionada);
+    seleccionarMascota.addEventListener('mouseover', reproducirAudioHover);
 
     comoJugarBtn.addEventListener('click', mostrarModal);
+    comoJugarBtn.addEventListener('mouseover', reproducirAudioHover);
     span.addEventListener('click', cerrarModal);
     window.addEventListener('click', cerrarModalWindow);
 
     reiniciarBtn.addEventListener('click', reinicarPartida);
+    reiniciarBtn.addEventListener('mouseover', reproducirAudioHover);
 }
 
 function mostrarModal(){
+    reproducirAudioClick();
+    
     modal.classList.remove('ocultar');
     modal.classList.add('block-m');
 }
@@ -127,6 +140,8 @@ function cerrarModalWindow(event){
 }
 
 function mostrarStatsAkairu(){
+    reproducirAudioClick();
+
     descripcion.classList.remove('ocultar');
 
     nombreMascotaH.innerHTML = "Akairu";
@@ -136,6 +151,8 @@ function mostrarStatsAkairu(){
 }
 
 function mostrarStatsSakanaari(){
+    reproducirAudioClick();
+
     descripcion.classList.remove('ocultar');
 
     nombreMascotaH.innerHTML = "Sakanaari";
@@ -145,6 +162,8 @@ function mostrarStatsSakanaari(){
 }
 
 function mostrarStatsKusame(){
+    reproducirAudioClick();
+
     descripcion.classList.remove('ocultar');
 
     nombreMascotaH.innerHTML = "Kusame";
@@ -153,9 +172,61 @@ function mostrarStatsKusame(){
     type.innerHTML = "PLANTA";
 }
 
+function reproducirAudioHover(){
+    let audio = document.getElementById('select-hover');
+    audio.play();
+}
+
+function reproducirAudioClick(){
+    let audio = document.getElementById('click');
+    audio.play();
+}
+
+function reproducirAudioElemento(tipoAtaque){
+    let audioFire = document.getElementById('fire');
+    let audioWater = document.getElementById('water');
+    let audioPlant = document.getElementById('plant');
+    let audioSpecial1 = document.getElementById('special-1');
+    let audioSpecial2 = document.getElementById('special-2');
+    let audioNormal = document.getElementById('normal');
+
+    switch(tipoAtaque){
+        case 1:
+            if(ataqueJugador != 4 || mascotaJugador != 3){
+                audioFire.play();
+            }else{
+                audioSpecial2.play();
+            }
+            break;
+        case 2:
+            if(ataqueJugador != 4 || mascotaJugador != 3){
+                audioWater.play();
+            }else{
+                audioSpecial2.play();
+            }
+            break;
+        case 3:
+            if(ataqueJugador != 4 || mascotaJugador != 3){
+                audioPlant.play();
+            }else{
+                audioSpecial2.play();
+            }
+            break;
+        case 4:
+            if(mascotaJugador != 3){
+                audioSpecial1.play();
+            }
+            break;
+        case 5:
+            audioNormal.play();
+            break;
+    }
+}
+
 function mascotaSeleccionada(){
+    reproducirAudioClick();
+
     if(akairuInput.checked){
-        alert("Seleccionaste al Zorro de Fuego, \"Akairu\".");
         mascotaJugadorH.innerHTML = "Akairu";
         mascotaJugador = 1;
         vidaJugador = 9;
@@ -166,7 +237,6 @@ function mascotaSeleccionada(){
         ataquesH.classList.add('mostrar');
         mascotasH.classList.add('ocultar');
     }else if(sakanaariInput.checked){
-        alert("Seleccionaste al Armadillo de Agua, \"Sakanaari\".");
         mascotaJugadorH.innerHTML = "Sakanaari";
         mascotaJugador = 2;
         vidaJugador = 14;
@@ -177,7 +247,6 @@ function mascotaSeleccionada(){
         ataquesH.classList.add('mostrar');
         mascotasH.classList.add('ocultar');
     }else if(kusameInput.checked){
-        alert("Seleccionaste a la Tortuga de Planta, \"Kusame\".");
         mascotaJugadorH.innerHTML = "Kusame";
         mascotaJugador = 3;
         vidaJugador = 20;
@@ -198,6 +267,8 @@ function random(min, max){
 }
 
 function atacarFuego(){
+    reproducirAudioClick();
+    
     ataqueJugador = 1;
     mascotaEnemigo = random(1, 3);
     tipoDeAtaqueEnemigo()
@@ -207,6 +278,8 @@ function atacarFuego(){
 }
 
 function atacarAgua(){
+    reproducirAudioClick();
+
     ataqueJugador = 2;
     mascotaEnemigo = random(1, 3);
     tipoDeAtaqueEnemigo()
@@ -216,6 +289,8 @@ function atacarAgua(){
 }
 
 function atacarPlanta(){
+    reproducirAudioClick();
+
     ataqueJugador = 3;
     mascotaEnemigo = random(1, 3);
     tipoDeAtaqueEnemigo()
@@ -225,6 +300,8 @@ function atacarPlanta(){
 }
 
 function ataqueEspecial(){
+    reproducirAudioClick();
+
     ataqueJugador = 4;
     mascotaEnemigo = random(1, 3);
     tipoDeAtaqueEnemigo()
@@ -253,6 +330,8 @@ function ataqueEspecial(){
 }
 
 function ataqueNormal(){
+    reproducirAudioClick();
+
     ataqueJugador = 5;
     mascotaEnemigo = random(1, 3);
     tipoDeAtaqueEnemigo()
@@ -300,101 +379,60 @@ function extraerAtaque(){
         switch(mascotaJugador){
             case 1:
                 fuegoBtn = document.getElementById('fuego-btn');
-                especialBtn = document.getElementById('especial-btn');
-                normalBtn = document.getElementById('normal-btn');
                 break;
             case 2:
                 aguaBtn = document.getElementById('agua-btn');
-                especialBtn = document.getElementById('especial-btn');
-                normalBtn = document.getElementById('normal-btn');
                 break;
             case 3:
                 plantaBtn = document.getElementById('planta-btn');
-                especialBtn = document.getElementById('especial-btn');
-                normalBtn = document.getElementById('normal-btn');
                 break;
         }
+        especialBtn = document.getElementById('especial-btn');
+        normalBtn = document.getElementById('normal-btn');
     })
 
     switch(mascotaJugador){
         case 1:
             fuegoBtn.addEventListener('click', atacarFuego);
-            especialBtn.addEventListener('click', ataqueEspecial);
-            normalBtn.addEventListener('click', ataqueNormal);
+            fuegoBtn.addEventListener('mouseover', reproducirAudioHover);
             break;
         case 2:
             aguaBtn.addEventListener('click', atacarAgua);
-            especialBtn.addEventListener('click', ataqueEspecial);
-            normalBtn.addEventListener('click', ataqueNormal);
+            aguaBtn.addEventListener('mouseover', reproducirAudioHover);
             break;
         case 3:
             plantaBtn.addEventListener('click', atacarPlanta);
-            especialBtn.addEventListener('click', ataqueEspecial);
-            normalBtn.addEventListener('click', ataqueNormal);
+            plantaBtn.addEventListener('mouseover', reproducirAudioHover);
             break;
     }
+    especialBtn.addEventListener('click', ataqueEspecial);
+    especialBtn.addEventListener('mouseover', reproducirAudioHover);
+    normalBtn.addEventListener('click', ataqueNormal);
+    normalBtn.addEventListener('mouseover', reproducirAudioHover);
 }
 
 function combate(){
-    let dañoRecibido = ataqueEnemigo - mascotaJugador;
-
-    if(ataqueJugador != 4 && ataqueJugador != 5){
-        calcularDaño();
-    }
-    
-    vidaEnemigo -= dañoAtaqueJugador;
-
-    if(ataqueJugador === 4){
-        mensajeEspecial();
-    }else{
-        mensajeJH.innerHTML = "Tu ataque es de " + tipoAtaqueJugador + " con un daño de " + dañoAtaqueJugador + ". El enemigo ahora tiene " + vidaEnemigo + " de vida.";
-    }
-
-    if(vidaEnemigo <= 0){
-        vidaEnemigo = 0;
-
-        vidaJugadorH.innerHTML = vidaJugador;
-        vidaEnemigoH.innerHTML = vidaEnemigo;
-
-        switch(mascotaJugador){
-            case 1:
-                fuegoBtn.disabled = true;
-                break;
-            case 2:
-                aguaBtn.disabled = true;
-                break;
-            case 3:
-                plantaBtn.disabled = true;
-                break;
-        }
-
-        mensajeJH.innerHTML = "Ganaste!";
-        mensajeEH.innerHTML = "";
-
-        return 0;
-    }
-
-    mensajeEH.innerHTML = "El enemigo esta atacando...";
+    mensajeJH.innerHTML = "Tu mascota esta atacando...";
 
     setTimeout(function(){
-        if(dañoRecibido == 0){
-            dañoAtaqueEnemigo = dañoAtaqueEnemigo / 2;
-        }else if(dañoRecibido == -1 || dañoRecibido == 2){
-            dañoAtaqueEnemigo = 0;
+        let dañoRecibido = ataqueEnemigo - mascotaJugador;
+
+        reproducirAudioElemento(ataqueJugador);
+
+        if(ataqueJugador != 4 && ataqueJugador != 5){
+            calcularDaño();
         }
 
-        if(ataqueJugador === 4 && mascotaJugador === 3){
-            vidaEnemigo -= dañoAtaqueEnemigo;
-    
-            mensajeEH.innerHTML = "El ataque del enemigo es de " + tipoAtaqueEnemigo + " con un daño de " + dañoAtaqueEnemigo + ". Tu mascota Kusame se Protegio con su Caparazon y le devolvio el ataque al enemigo... Ahora el enemigo tiene " + vidaEnemigo + " de vida.";
+        vidaEnemigo -= dañoAtaqueJugador;
+
+        if(ataqueJugador === 4){
+            mensajeEspecial();
         }else{
-            vidaJugador -= dañoAtaqueEnemigo;
-
-            mensajeEH.innerHTML = "El ataque del enemigo es de " + tipoAtaqueEnemigo + " con un daño de " + dañoAtaqueEnemigo + ". Tu mascota " + mascotaJugadorH.innerHTML + " ahora tiene " + vidaJugador + " de vida.";
+            mensajeJH.innerHTML = "Tu ataque es de " + tipoAtaqueJugador + " con un daño de " + dañoAtaqueJugador + ". El enemigo ahora tiene " + vidaEnemigo + " de vida.";
         }
 
-        if(vidaJugador <= 0){
-            vidaJugador = 0;
+        if(vidaEnemigo <= 0){
+            vidaEnemigo = 0;
 
             vidaJugadorH.innerHTML = vidaJugador;
             vidaEnemigoH.innerHTML = vidaEnemigo;
@@ -411,20 +449,67 @@ function combate(){
                     break;
             }
 
-            mensajeJH.innerHTML = "";
-            mensajeEH.innerHTML = "Perdiste!";
+            mensajeJH.innerHTML = "Ganaste!";
+            mensajeEH.innerHTML = "";
 
             return 0;
         }
 
-        vidaJugadorH.innerHTML = vidaJugador;
-        vidaEnemigoH.innerHTML = vidaEnemigo;
-        dañoAtaqueEnemigo = 4;
+        mensajeEH.innerHTML = "El enemigo esta atacando...";
 
-        if(vidaJugador <= vidaMaxima / 2 && !lanzoEspecial){
-            especialBtn.disabled = false;
-            especialBtn.classList.add('rainbow');
-        }
+        setTimeout(function(){
+            reproducirAudioElemento(ataqueEnemigo);
+
+
+            if(dañoRecibido == 0){
+                dañoAtaqueEnemigo = dañoAtaqueEnemigo / 2;
+            }else if(dañoRecibido == -1 || dañoRecibido == 2){
+                dañoAtaqueEnemigo = 0;
+            }
+
+            if(ataqueJugador === 4 && mascotaJugador === 3){
+                vidaEnemigo -= dañoAtaqueEnemigo;
+            
+                mensajeEH.innerHTML = "El ataque del enemigo es de " + tipoAtaqueEnemigo + " con un daño de " + dañoAtaqueEnemigo + ". Tu mascota Kusame se Protegio con su Caparazon y le devolvio el ataque al enemigo... Ahora el enemigo tiene " + vidaEnemigo + " de vida.";
+            }else{
+                vidaJugador -= dañoAtaqueEnemigo;
+
+                mensajeEH.innerHTML = "El ataque del enemigo es de " + tipoAtaqueEnemigo + " con un daño de " + dañoAtaqueEnemigo + ". Tu mascota " + mascotaJugadorH.innerHTML + " ahora tiene " + vidaJugador + " de vida.";
+            }
+
+            if(vidaJugador <= 0){
+                vidaJugador = 0;
+
+                vidaJugadorH.innerHTML = vidaJugador;
+                vidaEnemigoH.innerHTML = vidaEnemigo;
+
+                switch(mascotaJugador){
+                    case 1:
+                        fuegoBtn.disabled = true;
+                        break;
+                    case 2:
+                        aguaBtn.disabled = true;
+                        break;
+                    case 3:
+                        plantaBtn.disabled = true;
+                        break;
+                }
+
+                mensajeJH.innerHTML = "";
+                mensajeEH.innerHTML = "Perdiste!";
+
+                return 0;
+            }
+
+            vidaJugadorH.innerHTML = vidaJugador;
+            vidaEnemigoH.innerHTML = vidaEnemigo;
+            dañoAtaqueEnemigo = 4;
+
+            if(vidaJugador <= vidaMaxima / 2 && !lanzoEspecial){
+                especialBtn.disabled = false;
+                especialBtn.classList.add('rainbow');
+            }
+        }, 2000);
     }, 1500);
 }
 
@@ -456,6 +541,8 @@ function calcularDaño(){
 }
 
 function reinicarPartida(){
+    reproducirAudioClick();
+
     alert("La partida fue reiniciada!");
 
     location.reload();
